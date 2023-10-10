@@ -38,7 +38,9 @@ before_install:
   - cd build
 
 script:
-  - generate_makefile EXT_xmlParser
-  - make test
-  - bin/EXT_xmlParser.exe
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then generate_makefile EXT_xmlParser; make test; bin/EXT_xmlParser.exe; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd $MY_LOCATION ; mkdir cmake_build ; cd cmake_build ; fi
+  - cmake $QUICKY_REPOSITORY/EXT_xmlParser
+  - make
+  - ./EXT_xmlParser
 #EOF
